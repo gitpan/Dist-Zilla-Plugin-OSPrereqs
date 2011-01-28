@@ -14,7 +14,7 @@ use utf8;
 
 package Dist::Zilla::Plugin::OSPrereqs;
 BEGIN {
-  $Dist::Zilla::Plugin::OSPrereqs::VERSION = '0.001';
+  $Dist::Zilla::Plugin::OSPrereqs::VERSION = '0.002';
 }
 # ABSTRACT: List prereqs conditional on operating system
 
@@ -22,7 +22,7 @@ use Moose;
 use List::AllUtils 'first';
 use namespace::autoclean;
 
-with 'Dist::Zilla::Role::InstallTool';
+with 'Dist::Zilla::Role::InstallTool', 'Dist::Zilla::Role::MetaProvider';
 
 has prereq_os => (
   is   => 'ro',
@@ -105,8 +105,12 @@ sub setup_installer {
   $makefile->content($content);
 }
 
+sub metadata {
+  return { dynamic_config => 1 };
+}
+
 no Moose;
-__PACKAGE__->meta->make_immutable(inline_constructor => 0);
+__PACKAGE__->meta->make_immutable(inline_constructor => 1);
 1;
 
 
@@ -119,7 +123,7 @@ Dist::Zilla::Plugin::OSPrereqs - List prereqs conditional on operating system
 
 =head1 VERSION
 
-version 0.001
+version 0.002
 
 =head1 SYNOPSIS
 
@@ -135,7 +139,7 @@ must give the plugin a name corresponding to an operating system that would
 appear in C<<< $^O >>>.  Any prerequisites listed will be conditionally added to
 C<<< PREREQ_PM >>> in the Makefile.PL
 
-=for Pod::Coverage setup_installer
+=for Pod::Coverage setup_installer metadata
 
 =head1 WARNING
 

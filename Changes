@@ -1,5 +1,12 @@
 Revision history for Dist-Zilla-Plugin-OSPrereqs
 
+0.002     2011-01-28 09:58:01 EST5EDT
+
+  [NEW FEATURES]
+
+  - The dynamic_config key in the generated META.* files will be true (Dave
+    Rolsky)
+
 0.001     2011-01-27 23:18:42 EST5EDT
 
   [NEW FEATURES]

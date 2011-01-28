@@ -32,12 +32,13 @@ my %WriteMakefileArgs = (
   'NAME' => 'Dist::Zilla::Plugin::OSPrereqs',
   'PREREQ_PM' => {
     'Dist::Zilla::Role::InstallTool' => '0',
+    'Dist::Zilla::Role::MetaProvider' => '0',
     'List::AllUtils' => '0',
     'Moose' => '0',
     'namespace::autoclean' => '0',
     'utf8' => '0'
   },
-  'VERSION' => '0.001',
+  'VERSION' => '0.002',
   'test' => {
     'TESTS' => 't/*.t'
   }

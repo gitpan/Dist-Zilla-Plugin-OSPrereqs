@@ -1,0 +1,47 @@
+---
+abstract: 'List prereqs conditional on operating system'
+author:
+  - 'David Golden <dagolden@cpan.org>'
+build_requires:
+  Dist::Zilla::Tester: 0
+  File::Find: 0
+  File::Temp: 0
+  JSON: 2
+  Params::Util: 0
+  Path::Class: 0
+  Sub::Exporter: 0
+  Test::Deep: 0
+  Test::More: 0.88
+  YAML::Tiny: 0
+configure_requires:
+  ExtUtils::MakeMaker: 6.31
+dynamic_config: 0
+generated_by: 'Dist::Zilla version 4.200001, CPAN::Meta::Converter version 2.102400'
+license: apache
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: Dist-Zilla-Plugin-OSPrereqs
+no_index:
+  directory:
+    - t
+    - xt
+    - examples
+    - corpus
+  package:
+    - DB
+provides:
+  Dist::Zilla::Plugin::OSPrereqs:
+    file: lib/Dist/Zilla/Plugin/OSPrereqs.pm
+    version: 0.001
+requires:
+  Dist::Zilla::Role::InstallTool: 0
+  List::AllUtils: 0
+  Moose: 0
+  namespace::autoclean: 0
+  perl: 5.008001
+  utf8: 0
+resources:
+  homepage: http://github.com/dagolden/dist-zilla-plugin-osprereqs/tree
+  repository: git://github.com/dagolden/dist-zilla-plugin-osprereqs.git
+version: 0.001

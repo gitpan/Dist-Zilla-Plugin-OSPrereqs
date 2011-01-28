@@ -1,0 +1,75 @@
+{
+   "abstract" : "List prereqs conditional on operating system",
+   "author" : [
+      "David Golden <dagolden@cpan.org>"
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "Dist::Zilla version 4.200001, CPAN::Meta::Converter version 2.102400",
+   "license" : [
+      "apache_2_0"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "Dist-Zilla-Plugin-OSPrereqs",
+   "no_index" : {
+      "directory" : [
+         "t",
+         "xt",
+         "examples",
+         "corpus"
+      ],
+      "package" : [
+         "DB"
+      ]
+   },
+   "prereqs" : {
+      "configure" : {
+         "requires" : {
+            "ExtUtils::MakeMaker" : "6.31"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "Dist::Zilla::Role::InstallTool" : 0,
+            "List::AllUtils" : 0,
+            "Moose" : 0,
+            "namespace::autoclean" : 0,
+            "perl" : "5.008001",
+            "utf8" : 0
+         }
+      },
+      "test" : {
+         "requires" : {
+            "Dist::Zilla::Tester" : 0,
+            "File::Find" : 0,
+            "File::Temp" : 0,
+            "JSON" : "2",
+            "Params::Util" : 0,
+            "Path::Class" : 0,
+            "Sub::Exporter" : 0,
+            "Test::Deep" : 0,
+            "Test::More" : "0.88",
+            "YAML::Tiny" : 0
+         }
+      }
+   },
+   "provides" : {
+      "Dist::Zilla::Plugin::OSPrereqs" : {
+         "file" : "lib/Dist/Zilla/Plugin/OSPrereqs.pm",
+         "version" : "0.001"
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "homepage" : "http://github.com/dagolden/dist-zilla-plugin-osprereqs/tree",
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/dagolden/dist-zilla-plugin-osprereqs.git",
+         "web" : "http://github.com/dagolden/dist-zilla-plugin-osprereqs/tree"
+      }
+   },
+   "version" : "0.001"
+}
+

@@ -1,13 +1,4 @@
 #!perl
-#
-# This file is part of Dist-Zilla-Plugin-OSPrereqs
-#
-# This software is Copyright (c) 2011 by David Golden.
-#
-# This is free software, licensed under:
-#
-#   The Apache License, Version 2.0, January 2004
-#
 
 use strict;
 use warnings;
@@ -33,7 +24,32 @@ find(
   'lib',
 );
 
-my @scripts = glob "bin/*";
+sub _find_scripts {
+    my $dir = shift @_;
+
+    my @found_scripts = ();
+    find(
+      sub {
+        return unless -f;
+        my $found = $File::Find::name;
+        # nothing to skip
+        open my $FH, '<', $_ or do {
+          note( "Unable to open $found in ( $! ), skipping" );
+          return;
+        };
+        my $shebang = <$FH>;
+        return unless $shebang =~ /^#!.*?\bperl\b\s*$/;
+        push @found_scripts, $found;
+      },
+      $dir,
+    );
+
+    return @found_scripts;
+}
+
+my @scripts;
+do { push @scripts, _find_scripts($_) if -d $_ }
+    for qw{ bin script scripts };
 
 my $plan = scalar(@modules) + scalar(@scripts);
 $plan ? (plan tests => $plan) : (plan skip_all => "no tests to run");

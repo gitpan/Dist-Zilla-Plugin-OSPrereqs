@@ -1,5 +1,11 @@
 Revision history for Dist-Zilla-Plugin-OSPrereqs
 
+0.005     2014-07-15 17:43:22-04:00 America/New_York
+
+  [DOCUMENTED]
+
+  - Added DynamicPrereqs plugin to SEE ALSO
+
 0.004     2014-07-15 17:23:19-04:00 America/New_York
 
   [ADDED]

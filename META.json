@@ -84,7 +84,7 @@
    "provides" : {
       "Dist::Zilla::Plugin::OSPrereqs" : {
          "file" : "lib/Dist/Zilla/Plugin/OSPrereqs.pm",
-         "version" : "0.004"
+         "version" : "0.005"
       }
    },
    "release_status" : "stable",
@@ -99,11 +99,12 @@
          "web" : "https://github.com/dagolden/dist-zilla-plugin-osprereqs"
       }
    },
-   "version" : "0.004",
+   "version" : "0.005",
    "x_authority" : "cpan:DAGOLDEN",
    "x_contributors" : [
       "Dave Rolsky <autarch@urth.org>",
       "Ioan Rogers <ioanr@cpan.org>",
+      "Karen Etheridge <ether@cpan.org>",
       "Steven Haryanto (on PC, Bandung) <stevenharyanto@gmail.com>"
    ]
 }

@@ -5,7 +5,7 @@ use utf8;
 
 package Dist::Zilla::Plugin::OSPrereqs;
 # ABSTRACT: List prereqs conditional on operating system
-our $VERSION = '0.004'; # VERSION
+our $VERSION = '0.005'; # VERSION
 
 use Moose;
 use List::AllUtils 'first';
@@ -162,7 +162,7 @@ Dist::Zilla::Plugin::OSPrereqs - List prereqs conditional on operating system
 
 =head1 VERSION
 
-version 0.004
+version 0.005
 
 =head1 SYNOPSIS
 
@@ -205,6 +205,14 @@ This plugin is a fairly gross hack, based on the technique used for
 L<Dist::Zilla::Plugin::DualLife> and might break if/when Dist::Zilla
 changes how it generates install scripts.
 
+=head1 SEE ALSO
+
+=over 4
+
+=item * L<Dist::Zilla::Plugin::DynamicPrereqs>
+
+=back
+
 =for :stopwords cpan testmatrix url annocpan anno bugtracker rt cpants kwalitee diff irc mailto metadata placeholders metacpan
 
 =head1 SUPPORT
@@ -239,6 +247,10 @@ Dave Rolsky <autarch@urth.org>
 =item *
 
 Ioan Rogers <ioanr@cpan.org>
+
+=item *
+
+Karen Etheridge <ether@cpan.org>
 
 =item *
 

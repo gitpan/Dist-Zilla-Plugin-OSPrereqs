@@ -3,7 +3,7 @@ NAME
     system
 
 VERSION
-    version 0.004
+    version 0.005
 
 SYNOPSIS
     In your dist.ini:
@@ -43,6 +43,9 @@ WARNING
     Dist::Zilla::Plugin::DualLife and might break if/when Dist::Zilla
     changes how it generates install scripts.
 
+SEE ALSO
+    *   Dist::Zilla::Plugin::DynamicPrereqs
+
 SUPPORT
   Bugs / Feature Requests
     Please report any bugs or feature requests through the issue tracker at
@@ -64,6 +67,8 @@ CONTRIBUTORS
     *   Dave Rolsky <autarch@urth.org>
 
     *   Ioan Rogers <ioanr@cpan.org>
+
+    *   Karen Etheridge <ether@cpan.org>
 
     *   Steven Haryanto (on PC, Bandung) <stevenharyanto@gmail.com>
 

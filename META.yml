@@ -36,7 +36,7 @@ no_index:
 provides:
   Dist::Zilla::Plugin::OSPrereqs:
     file: lib/Dist/Zilla/Plugin/OSPrereqs.pm
-    version: '0.004'
+    version: '0.005'
 requires:
   Dist::Zilla::Role::InstallTool: '0'
   Dist::Zilla::Role::MetaProvider: '0'
@@ -51,9 +51,10 @@ resources:
   bugtracker: https://github.com/dagolden/dist-zilla-plugin-osprereqs/issues
   homepage: https://github.com/dagolden/dist-zilla-plugin-osprereqs
   repository: https://github.com/dagolden/dist-zilla-plugin-osprereqs.git
-version: '0.004'
+version: '0.005'
 x_authority: cpan:DAGOLDEN
 x_contributors:
   - 'Dave Rolsky <autarch@urth.org>'
   - 'Ioan Rogers <ioanr@cpan.org>'
+  - 'Karen Etheridge <ether@cpan.org>'
   - 'Steven Haryanto (on PC, Bandung) <stevenharyanto@gmail.com>'

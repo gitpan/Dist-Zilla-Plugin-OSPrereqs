@@ -3,13 +3,29 @@ NAME
     system
 
 VERSION
-    version 0.003
+    version 0.004
 
 SYNOPSIS
     In your dist.ini:
 
-       [OSPrereqs / MSWin32]
-       Win32API::File = 0.11
+      [OSPrereqs / MSWin32]
+      Win32API::File = 0.11
+
+    Some prefixes are recognized, i.e. "!" (not), "~" (regex match), "!~"
+    (regex non-match). Regex matches are done case-insensitively for
+    convenience:
+
+      ; require on non-Win32 system
+      [OSPrereqs / !MSWin32]
+      Proc::ProcessTable = 0.50
+
+      ; require on BSD
+      [OSPrereqs / ~bsd]
+      BSD::Resource=0
+
+      ; require on non-Windows system
+      [OSPrereqs / !win]
+      Proc::ProcessTable = 0.50
 
 DESCRIPTION
     This Dist::Zilla plugin allows you to specify OS-specific prerequisites.
@@ -30,9 +46,8 @@ WARNING
 SUPPORT
   Bugs / Feature Requests
     Please report any bugs or feature requests through the issue tracker at
-    <https://rt.cpan.org/Public/Dist/Display.html?Name=Dist-Zilla-Plugin-OSP
-    rereqs>. You will be notified automatically of any progress on your
-    issue.
+    <https://github.com/dagolden/dist-zilla-plugin-osprereqs/issues>. You
+    will be notified automatically of any progress on your issue.
 
   Source Code
     This is open source software. The code repository is available for
@@ -40,10 +55,17 @@ SUPPORT
 
     <https://github.com/dagolden/dist-zilla-plugin-osprereqs>
 
-      git clone git://github.com/dagolden/dist-zilla-plugin-osprereqs.git
+      git clone https://github.com/dagolden/dist-zilla-plugin-osprereqs.git
 
 AUTHOR
     David Golden <dagolden@cpan.org>
+
+CONTRIBUTORS
+    *   Dave Rolsky <autarch@urth.org>
+
+    *   Ioan Rogers <ioanr@cpan.org>
+
+    *   Steven Haryanto (on PC, Bandung) <stevenharyanto@gmail.com>
 
 COPYRIGHT AND LICENSE
     This software is Copyright (c) 2011 by David Golden.

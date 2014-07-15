@@ -4,7 +4,7 @@
       "David Golden <dagolden@cpan.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 4.300023, CPAN::Meta::Converter version 2.120921",
+   "generated_by" : "Dist::Zilla version 5.019, CPAN::Meta::Converter version 2.141170",
    "license" : [
       "apache_2_0"
    ],
@@ -27,7 +27,23 @@
    "prereqs" : {
       "configure" : {
          "requires" : {
-            "ExtUtils::MakeMaker" : "6.30"
+            "ExtUtils::MakeMaker" : "6.17"
+         }
+      },
+      "develop" : {
+         "requires" : {
+            "Dist::Zilla" : "5",
+            "Dist::Zilla::PluginBundle::DAGOLDEN" : "0.060",
+            "File::Spec" : "0",
+            "File::Temp" : "0",
+            "IO::Handle" : "0",
+            "IPC::Open3" : "0",
+            "Pod::Coverage::TrustPod" : "0",
+            "Test::CPAN::Meta" : "0",
+            "Test::More" : "0",
+            "Test::Pod" : "1.41",
+            "Test::Pod::Coverage" : "1.08",
+            "Test::Spelling" : "0.12"
          }
       },
       "runtime" : {
@@ -44,39 +60,51 @@
          }
       },
       "test" : {
+         "recommends" : {
+            "CPAN::Meta" : "0",
+            "CPAN::Meta::Requirements" : "2.120900"
+         },
          "requires" : {
             "Dist::Zilla::Tester" : "0",
-            "File::Find" : "0",
-            "File::Temp" : "0",
+            "ExtUtils::MakeMaker" : "0",
+            "File::Spec::Functions" : "0",
             "JSON" : "2",
+            "List::Util" : "0",
             "Params::Util" : "0",
             "Path::Class" : "0",
             "Sub::Exporter" : "0",
             "Test::Deep" : "0",
             "Test::More" : "0.88",
-            "YAML::Tiny" : "0"
+            "YAML::Tiny" : "0",
+            "lib" : "0",
+            "version" : "0"
          }
       }
    },
    "provides" : {
       "Dist::Zilla::Plugin::OSPrereqs" : {
          "file" : "lib/Dist/Zilla/Plugin/OSPrereqs.pm",
-         "version" : "0.003"
+         "version" : "0.004"
       }
    },
    "release_status" : "stable",
    "resources" : {
       "bugtracker" : {
-         "mailto" : "bug-Dist-Zilla-Plugin-OSPrereqs@rt.cpan.org",
-         "web" : "https://rt.cpan.org/Public/Dist/Display.html?Name=Dist-Zilla-Plugin-OSPrereqs"
+         "web" : "https://github.com/dagolden/dist-zilla-plugin-osprereqs/issues"
       },
-      "homepage" : "https://metacpan.org/release/Dist-Zilla-Plugin-OSPrereqs",
+      "homepage" : "https://github.com/dagolden/dist-zilla-plugin-osprereqs",
       "repository" : {
          "type" : "git",
-         "url" : "git://github.com/dagolden/dist-zilla-plugin-osprereqs.git",
+         "url" : "https://github.com/dagolden/dist-zilla-plugin-osprereqs.git",
          "web" : "https://github.com/dagolden/dist-zilla-plugin-osprereqs"
       }
    },
-   "version" : "0.003"
+   "version" : "0.004",
+   "x_authority" : "cpan:DAGOLDEN",
+   "x_contributors" : [
+      "Dave Rolsky <autarch@urth.org>",
+      "Ioan Rogers <ioanr@cpan.org>",
+      "Steven Haryanto (on PC, Bandung) <stevenharyanto@gmail.com>"
+   ]
 }
 

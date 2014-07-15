@@ -3,24 +3,27 @@ abstract: 'List prereqs conditional on operating system'
 author:
   - 'David Golden <dagolden@cpan.org>'
 build_requires:
-  Dist::Zilla::Tester: 0
-  File::Find: 0
-  File::Temp: 0
-  JSON: 2
-  Params::Util: 0
-  Path::Class: 0
-  Sub::Exporter: 0
-  Test::Deep: 0
-  Test::More: 0.88
-  YAML::Tiny: 0
+  Dist::Zilla::Tester: '0'
+  ExtUtils::MakeMaker: '0'
+  File::Spec::Functions: '0'
+  JSON: '2'
+  List::Util: '0'
+  Params::Util: '0'
+  Path::Class: '0'
+  Sub::Exporter: '0'
+  Test::Deep: '0'
+  Test::More: '0.88'
+  YAML::Tiny: '0'
+  lib: '0'
+  version: '0'
 configure_requires:
-  ExtUtils::MakeMaker: 6.30
+  ExtUtils::MakeMaker: '6.17'
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 4.300023, CPAN::Meta::Converter version 2.120921'
+generated_by: 'Dist::Zilla version 5.019, CPAN::Meta::Converter version 2.141170'
 license: apache
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
-  version: 1.4
+  version: '1.4'
 name: Dist-Zilla-Plugin-OSPrereqs
 no_index:
   directory:
@@ -33,19 +36,24 @@ no_index:
 provides:
   Dist::Zilla::Plugin::OSPrereqs:
     file: lib/Dist/Zilla/Plugin/OSPrereqs.pm
-    version: 0.003
+    version: '0.004'
 requires:
-  Dist::Zilla::Role::InstallTool: 0
-  Dist::Zilla::Role::MetaProvider: 0
-  List::AllUtils: 0
-  Moose: 0
-  namespace::autoclean: 0
-  perl: 5.008001
-  strict: 0
-  utf8: 0
-  warnings: 0
+  Dist::Zilla::Role::InstallTool: '0'
+  Dist::Zilla::Role::MetaProvider: '0'
+  List::AllUtils: '0'
+  Moose: '0'
+  namespace::autoclean: '0'
+  perl: '5.008001'
+  strict: '0'
+  utf8: '0'
+  warnings: '0'
 resources:
-  bugtracker: https://rt.cpan.org/Public/Dist/Display.html?Name=Dist-Zilla-Plugin-OSPrereqs
-  homepage: https://metacpan.org/release/Dist-Zilla-Plugin-OSPrereqs
-  repository: git://github.com/dagolden/dist-zilla-plugin-osprereqs.git
-version: 0.003
+  bugtracker: https://github.com/dagolden/dist-zilla-plugin-osprereqs/issues
+  homepage: https://github.com/dagolden/dist-zilla-plugin-osprereqs
+  repository: https://github.com/dagolden/dist-zilla-plugin-osprereqs.git
+version: '0.004'
+x_authority: cpan:DAGOLDEN
+x_contributors:
+  - 'Dave Rolsky <autarch@urth.org>'
+  - 'Ioan Rogers <ioanr@cpan.org>'
+  - 'Steven Haryanto (on PC, Bandung) <stevenharyanto@gmail.com>'

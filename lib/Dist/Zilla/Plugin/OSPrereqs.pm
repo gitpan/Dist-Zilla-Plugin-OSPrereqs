@@ -5,7 +5,7 @@ use utf8;
 
 package Dist::Zilla::Plugin::OSPrereqs;
 # ABSTRACT: List prereqs conditional on operating system
-our $VERSION = '0.003'; # VERSION
+our $VERSION = '0.004'; # VERSION
 
 use Moose;
 use List::AllUtils 'first';
@@ -14,128 +14,147 @@ use namespace::autoclean;
 with 'Dist::Zilla::Role::InstallTool', 'Dist::Zilla::Role::MetaProvider';
 
 has prereq_os => (
-  is   => 'ro',
-  isa  => 'Str',
-  lazy => 1,
-  init_arg => 'phase',
-  default  => sub {
-    my ($self) = @_;
-    return $self->plugin_name;
-  },
+    is       => 'ro',
+    isa      => 'Str',
+    lazy     => 1,
+    init_arg => 'phase',
+    default  => sub {
+        my ($self) = @_;
+        return $self->plugin_name;
+    },
 );
 
 around dump_config => sub {
-  my ($orig, $self) = @_;
-  my $config = $self->$orig;
+    my ( $orig, $self ) = @_;
+    my $config = $self->$orig;
 
-  my $this_config = {
-    os => $self->prereq_os,
-  };
+    my $this_config = { os => $self->prereq_os, };
 
-  $config->{'' . __PACKAGE__} = $this_config;
+    $config->{ '' . __PACKAGE__ } = $this_config;
 
-  return $config;
+    return $config;
 };
 
 has _prereq => (
-  is   => 'ro',
-  isa  => 'HashRef',
-  default => sub { {} },
+    is      => 'ro',
+    isa     => 'HashRef',
+    default => sub { {} },
 );
 
 has _builder => (
-  is   => 'rw',
-  isa  => 'Str',
-  default => 'makemaker',
+    is      => 'rw',
+    isa     => 'Str',
+    default => 'makemaker',
 );
 
 has _prereq_str => (
-  is   => 'ro',
-  isa  => 'HashRef',
-  default => sub { {
-      makemaker   => "\t\$WriteMakefileArgs{PREREQ_PM}",
-      modulebuild => "\t\$module_build_args{requires}",
-  } },
+    is      => 'ro',
+    isa     => 'HashRef',
+    default => sub {
+        {
+            makemaker   => "\t\$WriteMakefileArgs{PREREQ_PM}",
+            modulebuild => "\t\$module_build_args{requires}",
+        };
+    },
 );
 
 has _builder_regex => (
-  is   => 'ro',
-  isa  => 'HashRef',
-  default => sub { {
-      makemaker   => 'WriteMakefile\s*\(',
-      modulebuild => 'my \$build',
-  } },
+    is      => 'ro',
+    isa     => 'HashRef',
+    default => sub {
+        {
+            makemaker   => 'WriteMakefile\s*\(',
+            modulebuild => 'my \$build',
+        };
+    },
 );
 
 sub BUILDARGS {
-  my ($class, @arg) = @_;
-  my %copy = ref $arg[0] ? %{$arg[0]} : @arg;
+    my ( $class, @arg ) = @_;
+    my %copy = ref $arg[0] ? %{ $arg[0] } : @arg;
 
-  my $zilla = delete $copy{zilla};
-  my $name  = delete $copy{plugin_name};
+    my $zilla = delete $copy{zilla};
+    my $name  = delete $copy{plugin_name};
 
-  my @dashed = grep { /^-/ } keys %copy;
+    my @dashed = grep { /^-/ } keys %copy;
 
-  my %other;
-  for my $dkey (@dashed) {
-    (my $key = $dkey) =~ s/^-//;
+    my %other;
+    for my $dkey (@dashed) {
+        ( my $key = $dkey ) =~ s/^-//;
 
-    $other{ $key } = delete $copy{ $dkey };
-  }
+        $other{$key} = delete $copy{$dkey};
+    }
 
-  confess "don't try to pass -_prereq as a build arg!" if $other{_prereq};
+    confess "don't try to pass -_prereq as a build arg!" if $other{_prereq};
 
-  return {
-    zilla => $zilla,
-    plugin_name => $name,
-    _prereq     => \%copy,
-    %other,
-  }
+    return {
+        zilla       => $zilla,
+        plugin_name => $name,
+        _prereq     => \%copy,
+        %other,
+    };
 }
 
 sub setup_installer {
-  my ($self) = @_;
-  return unless my $os = $self->prereq_os;
+    my ($self) = @_;
+    return unless my $os = $self->prereq_os;
 
-  # first, try MakeMaker
-  my $build_script = first { $_->name eq 'Makefile.PL' } @{ $self->zilla->files };
-  if (!$build_script) {
-    $build_script = first { $_->name eq 'Build.PL' } @{ $self->zilla->files };
-    if ($build_script) {
-      $self->_builder('modulebuild');
-    } else {
-      $self->log_fatal('No Build.PL or Makefile.PL found. Using either [MakeMaker] or [ModuleBuild] is required');
+    # first, try MakeMaker
+    my $build_script = first { $_->name eq 'Makefile.PL' } @{ $self->zilla->files };
+    if ( !$build_script ) {
+        $build_script = first { $_->name eq 'Build.PL' } @{ $self->zilla->files };
+        if ($build_script) {
+            $self->_builder('modulebuild');
+        }
+        else {
+            $self->log_fatal(
+                'No Build.PL or Makefile.PL found. Using either [MakeMaker] or [ModuleBuild] is required'
+            );
+        }
     }
-  }
 
-  my $content = $build_script->content;
+    my $content = $build_script->content;
 
-  my $prereq_str = "if ( \$^O eq '$os' ) {\n";
-  my $prereq_hash = $self->_prereq;
-  for my $k ( sort keys %$prereq_hash ) {
-    my $v = $prereq_hash->{$k};
-    $prereq_str .= $self->_prereq_str->{$self->_builder} . "{'$k'} = '$v';\n";
-  }
-  $prereq_str .= "}\n\n";
+    my $prereq_str;
+    if ( $os =~ /^!~(.+)/ ) {
+        $prereq_str = "if ( \$^O !~ /$1/i ) {\n";
+    }
+    elsif ( $os =~ /^!(.+)/ ) {
+        $prereq_str = "if ( \$^O ne '$1' ) {\n";
+    }
+    elsif ( $os =~ /^~(.+)/ ) {
+        $prereq_str = "if ( \$^O =~ /$1/i ) {\n";
+    }
+    else {
+        $prereq_str = "if ( \$^O eq '$os' ) {\n";
+    }
+    my $prereq_hash = $self->_prereq;
+    for my $k ( sort keys %$prereq_hash ) {
+        my $v = $prereq_hash->{$k};
+        $prereq_str .= $self->_prereq_str->{ $self->_builder } . "{'$k'} = '$v';\n";
+    }
+    $prereq_str .= "}\n\n";
 
-  my $reg = $self->_builder_regex->{$self->_builder};
-  $content =~ s/(?=$reg)/$prereq_str/
-    or $self->log_fatal("Failed to insert conditional prereq for $os");
+    my $reg = $self->_builder_regex->{ $self->_builder };
+    $content =~ s/(?=$reg)/$prereq_str/
+      or $self->log_fatal("Failed to insert conditional prereq for $os");
 
-  return $build_script->content($content);
+    return $build_script->content($content);
 }
 
 sub metadata {
-  return { dynamic_config => 1 };
+    return { dynamic_config => 1 };
 }
 
 no Moose;
-__PACKAGE__->meta->make_immutable(inline_constructor => 1);
+__PACKAGE__->meta->make_immutable( inline_constructor => 1 );
 1;
 
 __END__
 
 =pod
+
+=encoding UTF-8
 
 =head1 NAME
 
@@ -143,21 +162,36 @@ Dist::Zilla::Plugin::OSPrereqs - List prereqs conditional on operating system
 
 =head1 VERSION
 
-version 0.003
+version 0.004
 
 =head1 SYNOPSIS
 
 In your dist.ini:
 
-   [OSPrereqs / MSWin32]
-   Win32API::File = 0.11
+  [OSPrereqs / MSWin32]
+  Win32API::File = 0.11
+
+Some prefixes are recognized, i.e. C<!> (not), C<~> (regex match), C<!~> (regex
+non-match). Regex matches are done case-insensitively for convenience:
+
+  ; require on non-Win32 system
+  [OSPrereqs / !MSWin32]
+  Proc::ProcessTable = 0.50
+
+  ; require on BSD
+  [OSPrereqs / ~bsd]
+  BSD::Resource=0
+
+  ; require on non-Windows system
+  [OSPrereqs / !win]
+  Proc::ProcessTable = 0.50
 
 =head1 DESCRIPTION
 
 This L<Dist::Zilla> plugin allows you to specify OS-specific prerequisites.  You
 must give the plugin a name corresponding to an operating system that would
-appear in C<<< $^O >>>.  Any prerequisites listed will be conditionally added to
-C<<< PREREQ_PM >>> in the Makefile.PL
+appear in C<$^O>.  Any prerequisites listed will be conditionally added to
+C<PREREQ_PM> in the Makefile.PL
 
 =for Pod::Coverage setup_installer metadata
 
@@ -168,7 +202,7 @@ plugin or the Build.PL generated by the L<Dist::Zilla::Plugin::ModuleBuild> plug
 and must appear in your dist.ini after whichever you use.
 
 This plugin is a fairly gross hack, based on the technique used for
-L<Dist::Zilla::Plugin::DualLife> and might break ifE<sol>when Dist::Zilla
+L<Dist::Zilla::Plugin::DualLife> and might break if/when Dist::Zilla
 changes how it generates install scripts.
 
 =for :stopwords cpan testmatrix url annocpan anno bugtracker rt cpants kwalitee diff irc mailto metadata placeholders metacpan
@@ -178,7 +212,7 @@ changes how it generates install scripts.
 =head2 Bugs / Feature Requests
 
 Please report any bugs or feature requests through the issue tracker
-at L<https://rt.cpan.org/Public/Dist/Display.html?Name=Dist-Zilla-Plugin-OSPrereqs>.
+at L<https://github.com/dagolden/dist-zilla-plugin-osprereqs/issues>.
 You will be notified automatically of any progress on your issue.
 
 =head2 Source Code
@@ -188,11 +222,29 @@ public review and contribution under the terms of the license.
 
 L<https://github.com/dagolden/dist-zilla-plugin-osprereqs>
 
-  git clone git://github.com/dagolden/dist-zilla-plugin-osprereqs.git
+  git clone https://github.com/dagolden/dist-zilla-plugin-osprereqs.git
 
 =head1 AUTHOR
 
 David Golden <dagolden@cpan.org>
+
+=head1 CONTRIBUTORS
+
+=over 4
+
+=item *
+
+Dave Rolsky <autarch@urth.org>
+
+=item *
+
+Ioan Rogers <ioanr@cpan.org>
+
+=item *
+
+Steven Haryanto (on PC, Bandung) <stevenharyanto@gmail.com>
+
+=back
 
 =head1 COPYRIGHT AND LICENSE
 
